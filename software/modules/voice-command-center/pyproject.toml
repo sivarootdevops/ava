@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "voice-command-center"
+dynamic = ["version"]
+description = 'For receiving voice commands to control devices'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Sivaroot Chuncharoen", email = "sivaroot.devops@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+
+[project.urls]
+Documentation = "https://github.com/Sivaroot Chuncharoen/voice-command-center#readme"
+Issues = "https://github.com/Sivaroot Chuncharoen/voice-command-center/issues"
+Source = "https://github.com/Sivaroot Chuncharoen/voice-command-center"
+
+[tool.hatch.version]
+path = "src/voice_command_center/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/voice_command_center tests}"
+
+[tool.coverage.run]
+source_pkgs = ["voice_command_center", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/voice_command_center/__about__.py",
+]
+
+[tool.coverage.paths]
+voice_command_center = ["src/voice_command_center", "*/voice-command-center/src/voice_command_center"]
+tests = ["tests", "*/voice-command-center/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
