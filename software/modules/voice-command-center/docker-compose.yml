@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  database:
+    container_name: mongo_database
+    image: mongo:8.0.0-rc4
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Pa33w0rd
+    volumes:
+      - ./db_data:/data/db
+    ports:
+      - 20000:27017
+  redis_state:
+    image: redis:7.2.4-alpine
+    container_name: redis_state
+    ports:
+      - "6379:6379"
+ 

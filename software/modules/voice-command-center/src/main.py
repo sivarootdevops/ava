@@ -1,22 +1,30 @@
 import sys
 
 sys.dont_write_bytecode = True
+import threading
 
+import database.redis as redis_client
+import operators.notifier as notifier
+import operators.responder as responder
+import operators.transcriper as transcriper
+import operators.translator as translator
+from connection import internet
+from database.client import DatabaseClient
 from enums.command import CommandEnum
-from notifier import Notifier
-from responder import Responder
-from transcriper import Transcriper
-from translator import Translator
 
 
 def handle_command(raw_command: str):
-    command = Translator().translate_command(raw_command)
+    print(raw_command)
+    command = translator.translate_command(raw_command)
     if (command == CommandEnum.IDLE): return
-    respone = Responder().respone(command)
-    Notifier().notify(respone)
+    respone = responder.respone(command)
+    notifier.notify(respone)
 
 def main():
-    transcriper = Transcriper(command=handle_command).start()
+    redis_instance = redis_client.connect()
+    check_connection_thread = threading.Thread(target=internet.start(redis=redis_instance))
+    check_connection_thread.start()
+    transcriper.start(redis=redis_instance, command=handle_command)
     
 if __name__ == "__main__":
     main()

@@ -12,6 +12,8 @@ numpy = "^1.26.4"
 speechrecognition = "^3.10.4"
 gtts = "^2.5.1"
 pydub = "^0.25.1"
+pymongo = "^4.7.2"
+redis = "^5.0.4"
 
 
 [build-system]
